@@ -21,6 +21,10 @@ app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
 
+// Serve favicon
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+
 // Routes
 app.use('/api/v1/admin', adminRoutes);
 
