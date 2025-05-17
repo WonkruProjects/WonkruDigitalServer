@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
+const path = require('path');
 const errorMiddleware = require("../middleware/errorMiddleware");
 const connectDB = require('../config/database');
 const adminRoutes = require("../routes/adminRoutes");
@@ -20,8 +21,8 @@ app.use(helmet());
 app.use(morgan("common"));
 app.use(cors());
 
-// Serve favicon
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Serve public folder
+app.use(express.static(path.join(__dirname, 'public', )));
 
 
 // Routes
