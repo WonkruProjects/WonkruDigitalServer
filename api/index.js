@@ -24,6 +24,13 @@ app.use(cors());
 // Routes
 app.use('/api/v1/admin', adminRoutes);
 
+// Default route
+app.get('/', (req, res) => {
+  res.json({
+    message: "Welcome to the API. Please refer to the documentation for usage details."
+  });
+});
+
 // Error middleware
 app.use(errorHandler);
 app.use(errorMiddleware);
