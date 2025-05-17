@@ -5,7 +5,6 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 const errorMiddleware = require("../middleware/errorMiddleware");
-const errorHandler = require("../middleware/errorHandler");
 const connectDB = require('../config/database');
 const adminRoutes = require("../routes/adminRoutes");
 connectDB();
@@ -36,7 +35,6 @@ app.get('/', (req, res) => {
 });
 
 // Error middleware
-app.use(errorHandler);
 app.use(errorMiddleware);
 
 
