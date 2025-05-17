@@ -4,10 +4,10 @@ const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
-const errorMiddleware = require("./middleware/errorMiddleware");
-const errorHandler = require("./middleware/errorHandler");
-const connectDB = require('./config/database');
-const adminRoutes = require("./routes/adminRoutes");
+const errorMiddleware = require("../middleware/errorMiddleware");
+const errorHandler = require("../middleware/errorHandler");
+const connectDB = require('../config/database');
+const adminRoutes = require("../routes/adminRoutes");
 connectDB();
 
 require("dotenv").config();
@@ -33,3 +33,5 @@ app.use(errorMiddleware);
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+module.exports = app;
