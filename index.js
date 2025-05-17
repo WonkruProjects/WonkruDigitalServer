@@ -1,0 +1,35 @@
+// index.js
+const express = require("express");
+const bodyParser = require("body-parser");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const cors = require("cors");
+const errorMiddleware = require("./middleware/errorMiddleware");
+const errorHandler = require("./middleware/errorHandler");
+const connectDB = require('./config/database');
+const adminRoutes = require("./routes/adminRoutes");
+connectDB();
+
+require("dotenv").config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(bodyParser.json());
+app.use(helmet());
+app.use(morgan("common"));
+app.use(cors());
+
+// Routes
+app.use('/api/v1/admin', adminRoutes);
+
+// Error middleware
+app.use(errorHandler);
+app.use(errorMiddleware);
+
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
