@@ -45,7 +45,7 @@ exports.getDashboard = async (req, res, next) => {
         res.status(200).json({
             success:true,
             message: 'Dashboard data fetched successfully',
-            admin: req.admin
+            admin: req.user
         });
     } catch (err) {
         next(err);
