@@ -14,6 +14,7 @@ exports.loginAdmin = async (req, res, next) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         res.status(200).json({
+            success:true,
             token: generateToken(admin._id),
             admin: { id: admin._id, email: admin.email }
         });
@@ -42,6 +43,7 @@ exports.resetPassword = async (req, res, next) => {
 exports.getDashboard = async (req, res, next) => {
     try {
         res.status(200).json({
+            success:true,
             message: 'Dashboard data fetched successfully',
             admin: req.admin
         });

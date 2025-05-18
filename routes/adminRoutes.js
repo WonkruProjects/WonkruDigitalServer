@@ -7,6 +7,6 @@ const { loginValidator, resetPasswordValidator } = require('../validations/admin
 
 router.post('/login', validate(loginValidator), adminController.loginAdmin);
 router.post('/reset-password', validate(resetPasswordValidator), adminController.resetPassword);
-router.get('/dashboard', protect, adminController.getDashboard);
+router.get('/dashboard-details', protect, adminController.getDashboard);
 
 module.exports = router;
