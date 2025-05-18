@@ -3,8 +3,8 @@ const connectDB = require('../config/database');
 const user = require('../models/user');
 const generateToken = require('../utils/genrateToken');
 
-// POST /api/admin/login
-exports.loginAdmin = async (req, res, next) => {
+
+exports.login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         // create a user with email and password
@@ -16,14 +16,13 @@ exports.loginAdmin = async (req, res, next) => {
         res.status(200).json({
             success:true,
             token: generateToken(admin._id),
-            admin: { id: admin._id, email: admin.email }
+            user: { id: admin._id, email: admin.email }
         });
     } catch (err) {
         next(err);
     }
 };
 
-// POST /api/admin/reset-password
 exports.resetPassword = async (req, res, next) => {
     try {
         const { email, newPassword } = req.body;
@@ -39,15 +38,3 @@ exports.resetPassword = async (req, res, next) => {
     }
 };
 
-// GET /api/admin/dashboard
-exports.getDashboard = async (req, res, next) => {
-    try {
-        res.status(200).json({
-            success:true,
-            message: 'Dashboard data fetched successfully',
-            admin: req.user
-        });
-    } catch (err) {
-        next(err);
-    }
-};

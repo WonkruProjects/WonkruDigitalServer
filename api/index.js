@@ -7,7 +7,9 @@ const cors = require("cors");
 const path = require('path');
 const errorMiddleware = require("../middleware/errorMiddleware");
 const connectDB = require('../config/database');
-const adminRoutes = require("../routes/adminRoutes");
+const authRoutes = require("../routes/authRoutes");
+const leadRoutes = require("../routes/leadsRoutes");
+
 connectDB();
 
 require("dotenv").config();
@@ -30,8 +32,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Routes
-app.use('/api/v1/admin', adminRoutes);
+// Auth Route
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/lead', leadRoutes);
 
 // Error middleware
 app.use(errorMiddleware);
