@@ -1,4 +1,5 @@
 
+const connectDB = require('../config/database');
 const user = require('../models/user');
 const generateToken = require('../utils/genrateToken');
 
@@ -6,8 +7,10 @@ const generateToken = require('../utils/genrateToken');
 exports.loginAdmin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
+        // create a user with email and password
         const admin = await user.findOne({ email });
-        if (!admin || !(await user.matchPassword(password))) {
+        console.log(admin);
+        if (!admin || !(await admin.matchPassword(password))) {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
         res.status(200).json({
