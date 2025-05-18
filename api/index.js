@@ -24,16 +24,14 @@ app.use(cors());
 // Serve public folder
 app.use(express.static(path.join(__dirname, 'public', )));
 
+// Default route
+// Serve index.html when '/' is accessed
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Routes
 app.use('/api/v1/admin', adminRoutes);
-
-// Default route
-app.get('/', (req, res) => {
-  res.json({
-    message: "Welcome to the API. Please refer to the documentation for usage details."
-  });
-});
 
 // Error middleware
 app.use(errorMiddleware);
