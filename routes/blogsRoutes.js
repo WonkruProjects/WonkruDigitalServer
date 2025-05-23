@@ -8,9 +8,9 @@ const blogController = require('../controllers/blogsController');
 
 // Public
 router.get('/', blogController.getAllBlogs);
-router.get('/:id', blogController.getBlogById);
 router.get('/search', blogController.searchBlog);
 router.get('/technology/:tech', blogController.blogByTechnology);
+router.get('/:id', blogController.getBlogById);
 router.get('/:id/previous', blogController.previousBlog);
 router.get('/:id/next', blogController.nextBlog);
 router.post('/:id/like', blogController.likeBlog);
