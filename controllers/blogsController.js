@@ -128,7 +128,7 @@ exports.previousBlog = async (req, res) => {
           publicationDate: { $lt: currentBlog.publicationDate }
         }).sort({ publicationDate: -1 });
     
-        res.json(previousBlog?{success:true, message: 'Blog fetched successfully.', data:previousBlog} : {success:false, message: 'No Next Blog'});
+        res.json(previousBlog?{success:true, message: 'Blog fetched successfully.', data:previousBlog} : {success:false, message: 'No previous Blog'});
       } catch (err) {
         res.status(500).json({ success:false,error: err.message });
       }
