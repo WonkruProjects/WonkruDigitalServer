@@ -55,8 +55,11 @@ exports.getBlogById = async (req, res) => {
 exports.getBlogByTitle = async (req, res) => {
   try {
     const slug = req.params.slug;
-    const title = slug.replace(/-/g, ' '); // Convert slug to title
-    const blog = await Blog.findOne({ title });
+    const title = slug.replace(/-/g, ' '); // Convert slug to normal title
+
+    const blog = await Blog.findOne({
+      title: { $regex: new RegExp('^' + title + '$', 'i') } // case-insensitive exact match
+    });
 
     if (!blog) return res.status(404).json({ success: false, error: 'Blog not found' });
 
