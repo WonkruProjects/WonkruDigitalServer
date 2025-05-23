@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
   featuredImageUrl: { type: String, required: true },
-  title: { type: String, required: true },
+  title: { type: String, required: true , unique: true },
   description: { type: String, required: true },
   categories: [{ type: String }],
   technologies: [{ type: String }],

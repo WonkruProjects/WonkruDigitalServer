@@ -4,6 +4,10 @@ const Blog = require('../models/blog');
 // 1. Create Blog
 exports.createBlog = async (req, res) => {
   try {
+    const existing = await Blog.findOne({ title: req.body.title });
+    if (existing) {
+      return res.status(400).json({ success: false, error: 'Title already exists' });
+    }
     const blog = new Blog(req.body);
     await blog.save();
     res.status(201).json({success:true, message: 'Blog created successfully.', data:blog });
@@ -45,6 +49,34 @@ exports.getBlogById = async (req, res) => {
       } catch (err) {
         res.status(500).json({ success:false,error: err.message });
       }
+};
+
+// 3. Get Blog by Title
+exports.getBlogByTitle = async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const title = slug.replace(/-/g, ' '); // Convert slug to title
+    const blog = await Blog.findOne({ title });
+
+    if (!blog) return res.status(404).json({ success: false, error: 'Blog not found' });
+
+    blog.views += 1;
+    await blog.save();
+     // Find related blogs (same categories or technologies, exclude current blog)
+     const relatedBlogs = await Blog.find({
+      _id: { $ne: blog._id },
+      $or: [
+        { categories: { $in: blog.categories } },
+        { technologies: { $in: blog.technologies } }
+      ]
+    })
+    .limit(3)
+    .sort({ publicationDate: -1 });
+
+    res.json({ success: true,data :blog,relatedBlogs });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 };
 
 
