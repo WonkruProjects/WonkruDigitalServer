@@ -1,11 +1,40 @@
 // controllers/leadController.js
 const Lead = require('../models/lead');
+const resend = require('../utils/resendClient');
 
 // 1. Public Contact Us
 exports.contactUs = async (req, res) => {
   try {
     const { fullName, email, companyName, serviceInterestedIn,message } = req.body;
     const lead = await Lead.create({ fullName, email, companyName, serviceInterestedIn ,message});
+    try{
+      // Email to User
+      await resend.emails.send({
+        from: 'Support Wonkru Didital<onboarding@resend.dev>',
+        to: email,
+        subject: 'Thank you for contacting us!',
+        html: `<p>Hi ${fullName},</p>
+              <p>Thank you for reaching out to us. We’ve received your inquiry and will respond shortly.</p>
+              <p>Best regards,<br>Your Company</p>`
+      });
+
+      // Email to Admin
+      await resend.emails.send({
+        from: 'Notifier <onboarding@resend.dev>',
+        to: 'berlin@wonkrudigital.com',
+        subject: 'New Contact Inquiry Received',
+        html: `<p>You have a new inquiry:</p>
+              <ul>
+                <li><strong>Name:</strong> ${fullName}</li>
+                <li><strong>Email:</strong> ${email}</li>
+                <li><strong>Company:</strong> ${companyName}</li>
+                <li><strong>Service Interested In:</strong> ${serviceInterestedIn}</li>
+                <li><strong>Message:</strong> ${message}</li>
+              </ul>`
+      });
+    }catch(ex){
+      console.log(ex);
+    }
     res.status(201).json({success:true, message: 'Inquiry created successfully.', data:lead });
   } catch (err) {
     res.status(500).json({ message: 'Error creating lead', error: err.message });
