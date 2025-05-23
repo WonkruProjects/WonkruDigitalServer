@@ -8,9 +8,10 @@ exports.contactUs = async (req, res) => {
     const { fullName, email, companyName, serviceInterestedIn,message } = req.body;
     const lead = await Lead.create({ fullName, email, companyName, serviceInterestedIn ,message});
     try{
+      console.log("Sending email")
       // Email to User
       await resend.emails.send({
-        from: 'Support Wonkru Didital<onboarding@resend.dev>',
+        from: 'Support Wonkru Didital<projects@wonkrudigital.com>',
         to: email,
         subject: 'Thank you for contacting us!',
         html: `<p>Hi ${fullName},</p>
@@ -20,7 +21,7 @@ exports.contactUs = async (req, res) => {
 
       // Email to Admin
       await resend.emails.send({
-        from: 'Notifier <onboarding@resend.dev>',
+        from: 'Notifier <projects@wonkrudigital.com>',
         to: 'berlin@wonkrudigital.com',
         subject: 'New Contact Inquiry Received',
         html: `<p>You have a new inquiry:</p>
