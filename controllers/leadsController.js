@@ -11,7 +11,7 @@ exports.contactUs = async (req, res) => {
       console.log("Sending email")
       // Email to User
       await resend.emails.send({
-        from: 'Support Wonkru Didital<projects@wonkrudigital.com>',
+        from: 'Support Wonkru Digital<enquiry@enquiry.wonkrudigital.com>',
         to: email,
         subject: 'Thank you for contacting us!',
         html: `<p>Hi ${fullName},</p>
@@ -21,7 +21,7 @@ exports.contactUs = async (req, res) => {
 
       // Email to Admin
       await resend.emails.send({
-        from: 'Notifier <projects@wonkrudigital.com>',
+        from: 'Notifier <enquiry@enquiry.wonkrudigital.com>',
         to: 'berlin@wonkrudigital.com',
         subject: 'New Contact Inquiry Received',
         html: `<p>You have a new inquiry:</p>
